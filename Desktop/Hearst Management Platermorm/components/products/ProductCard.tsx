@@ -5,6 +5,7 @@ import Card from '@/components/ui/Card';
 import Badge from '@/components/ui/Badge';
 import MiningIndicator from '@/components/ui/MiningIndicator';
 import Button from '@/components/ui/Button';
+import { formatPercentage } from '@/lib/format';
 import styles from './ProductCard.module.css';
 
 interface ProductCardProps {
@@ -45,7 +46,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             <div className={styles.metricRow}>
               <span className={styles.metricLabel}>YTD Performance</span>
               <span className={`${styles.metricValue} ${product.ytdPerformance >= 0 ? styles.metricValuePositive : styles.metricValueNegative}`}>
-                {product.ytdPerformance >= 0 ? '+' : ''}{product.ytdPerformance.toFixed(1)}%
+                {formatPercentage(product.ytdPerformance, 1)}
               </span>
             </div>
             {product.miningExposurePercent > 0 && (

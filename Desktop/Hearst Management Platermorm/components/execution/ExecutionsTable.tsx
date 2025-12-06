@@ -153,9 +153,9 @@ export default function ExecutionsTable() {
               <th className={styles.tableHeaderCell}>Type</th>
               <th className={styles.tableHeaderCell}>Status</th>
               <th className={styles.tableHeaderCell}>Asset</th>
-              <th className={styles.tableHeaderCell} style={{ textAlign: 'right' }}>Quantity</th>
-              <th className={styles.tableHeaderCell} style={{ textAlign: 'right' }}>Price</th>
-              <th className={styles.tableHeaderCell} style={{ textAlign: 'right' }}>Value</th>
+              <th className={styles.tableHeaderCell}>Quantity</th>
+              <th className={styles.tableHeaderCell}>Price</th>
+              <th className={styles.tableHeaderCell}>Value</th>
               <th className={styles.tableHeaderCell}>Venue</th>
               <th className={styles.tableHeaderCell}>Timestamp</th>
               <th className={styles.tableHeaderCell} style={{ textAlign: 'center' }}>Action</th>

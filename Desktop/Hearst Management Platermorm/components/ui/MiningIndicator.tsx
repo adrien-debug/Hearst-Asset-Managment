@@ -18,3 +18,5 @@ export default function MiningIndicator({ percent, className = '' }: MiningIndic
 
 
 
+
+

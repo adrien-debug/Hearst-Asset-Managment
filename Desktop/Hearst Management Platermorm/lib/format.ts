@@ -70,5 +70,22 @@ export function formatDate(
   } as Intl.DateTimeFormatOptions);
 }
 
+/**
+ * Format date as "Jan 2024" (without period after month)
+ */
+export function formatMonthYear(dateString: string): string {
+  const date = new Date(dateString);
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  return `${months[date.getMonth()]} ${date.getFullYear()}`;
+}
+
+/**
+ * Format percentage consistently
+ */
+export function formatPercentage(value: number, decimals: number = 1, showSign: boolean = true): string {
+  const sign = showSign && value >= 0 ? '+' : '';
+  return `${sign}${value.toFixed(decimals)}%`;
+}
+
 
 

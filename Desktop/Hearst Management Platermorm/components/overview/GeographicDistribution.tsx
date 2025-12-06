@@ -39,7 +39,7 @@ export default function GeographicDistribution({ data }: GeographicDistributionP
                 className={styles.bar}
                 style={{
                   width: `${(item.percentage / maxPercentage) * 100}%`,
-                  background: `linear-gradient(90deg, var(--color-primary), var(--color-secondary))`
+                  background: `linear-gradient(90deg, var(--color-chart-green-1), var(--color-chart-green-3))`
                 }}
               />
             </div>
@@ -49,6 +49,8 @@ export default function GeographicDistribution({ data }: GeographicDistributionP
     </Card>
   );
 }
+
+
 
 
 

@@ -40,14 +40,10 @@ const statusColors = {
 
 export default function ReportsTable() {
   const [filterType, setFilterType] = useState<'all' | Report['type']>('all');
-  const [filterStatus, setFilterStatus] = useState<'all' | Report['status']>('all');
-  const [filterFrequency, setFilterFrequency] = useState<'all' | Report['frequency']>('all');
 
   const filteredReports = mockReports.filter(report => {
     const typeMatch = filterType === 'all' || report.type === filterType;
-    const statusMatch = filterStatus === 'all' || report.status === filterStatus;
-    const frequencyMatch = filterFrequency === 'all' || report.frequency === filterFrequency;
-    return typeMatch && statusMatch && frequencyMatch;
+    return typeMatch;
   });
 
   const totalReports = mockReports.length;
@@ -106,72 +102,6 @@ export default function ReportsTable() {
             className={`${styles.filterButton} ${filterType === 'custom' ? styles.filterButtonActive : styles.filterButtonInactive}`}
           >
             Custom
-          </button>
-        </div>
-        <div className={styles.filterGroup}>
-          <span className={styles.filterLabel}>Status</span>
-          <button
-            onClick={() => setFilterStatus('all')}
-            className={`${styles.filterButton} ${filterStatus === 'all' ? styles.filterButtonActive : styles.filterButtonInactive}`}
-          >
-            All
-          </button>
-          <button
-            onClick={() => setFilterStatus('scheduled')}
-            className={`${styles.filterButton} ${filterStatus === 'scheduled' ? styles.filterButtonActive : styles.filterButtonInactive}`}
-          >
-            Scheduled
-          </button>
-          <button
-            onClick={() => setFilterStatus('generating')}
-            className={`${styles.filterButton} ${filterStatus === 'generating' ? styles.filterButtonActive : styles.filterButtonInactive}`}
-          >
-            Generating
-          </button>
-          <button
-            onClick={() => setFilterStatus('completed')}
-            className={`${styles.filterButton} ${filterStatus === 'completed' ? styles.filterButtonActive : styles.filterButtonInactive}`}
-          >
-            Completed
-          </button>
-          <button
-            onClick={() => setFilterStatus('failed')}
-            className={`${styles.filterButton} ${filterStatus === 'failed' ? styles.filterButtonActive : styles.filterButtonInactive}`}
-          >
-            Failed
-          </button>
-        </div>
-        <div className={styles.filterGroup}>
-          <span className={styles.filterLabel}>Frequency</span>
-          <button
-            onClick={() => setFilterFrequency('all')}
-            className={`${styles.filterButton} ${filterFrequency === 'all' ? styles.filterButtonActive : styles.filterButtonInactive}`}
-          >
-            All
-          </button>
-          <button
-            onClick={() => setFilterFrequency('daily')}
-            className={`${styles.filterButton} ${filterFrequency === 'daily' ? styles.filterButtonActive : styles.filterButtonInactive}`}
-          >
-            Daily
-          </button>
-          <button
-            onClick={() => setFilterFrequency('weekly')}
-            className={`${styles.filterButton} ${filterFrequency === 'weekly' ? styles.filterButtonActive : styles.filterButtonInactive}`}
-          >
-            Weekly
-          </button>
-          <button
-            onClick={() => setFilterFrequency('monthly')}
-            className={`${styles.filterButton} ${filterFrequency === 'monthly' ? styles.filterButtonActive : styles.filterButtonInactive}`}
-          >
-            Monthly
-          </button>
-          <button
-            onClick={() => setFilterFrequency('quarterly')}
-            className={`${styles.filterButton} ${filterFrequency === 'quarterly' ? styles.filterButtonActive : styles.filterButtonInactive}`}
-          >
-            Quarterly
           </button>
         </div>
       </div>
@@ -299,6 +229,8 @@ export default function ReportsTable() {
     </div>
   );
 }
+
+
 
 
 

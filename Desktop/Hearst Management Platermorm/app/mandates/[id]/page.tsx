@@ -25,3 +25,5 @@ export default function MandateDetailPage({ params }: MandateDetailPageProps) {
 
 
 
+
+

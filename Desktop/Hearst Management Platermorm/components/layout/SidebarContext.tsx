@@ -6,6 +6,8 @@ interface SidebarContextType {
   isCollapsed: boolean;
   setIsCollapsed: (collapsed: boolean) => void;
   isMobile: boolean;
+  isTablet: boolean;
+  isLargeScreen: boolean;
   isMobileOpen: boolean;
   setIsMobileOpen: (open: boolean) => void;
 }
@@ -21,30 +23,66 @@ export function SidebarProvider({ children }: { children: ReactNode }) {
     }
     return false;
   });
+  const [isTablet, setIsTablet] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const width = window.innerWidth;
+      return width > 768 && width <= 1024;
+    }
+    return false;
+  });
+  const [isLargeScreen, setIsLargeScreen] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth >= 1440;
+    }
+    return false;
+  });
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
     
-    const checkMobile = () => {
+    const checkResponsive = () => {
       if (typeof window === 'undefined') return;
-      setIsMobile(window.innerWidth <= 768);
-      if (window.innerWidth > 768) {
+      const width = window.innerWidth;
+      const mobile = width <= 768;
+      const tablet = width > 768 && width <= 1024;
+      const largeScreen = width >= 1440;
+      
+      setIsMobile(mobile);
+      setIsTablet(tablet);
+      setIsLargeScreen(largeScreen);
+      
+      // Fermer le menu mobile si on passe en desktop
+      if (width > 768) {
         setIsMobileOpen(false);
+      }
+      
+      // Auto-collapse sur tablet si pas déjà collapsed
+      if (tablet && !isCollapsed && !mobile) {
+        setIsCollapsed(true);
       }
     };
     
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
+    checkResponsive();
+    
+    // Debounce pour améliorer les performances
+    let timeoutId: NodeJS.Timeout;
+    const handleResize = () => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(checkResponsive, 150);
+    };
+    
+    window.addEventListener('resize', handleResize);
     return () => {
+      clearTimeout(timeoutId);
       if (typeof window !== 'undefined' && window.removeEventListener) {
         try {
-          window.removeEventListener('resize', checkMobile);
+          window.removeEventListener('resize', handleResize);
         } catch (e) {
           // Ignore errors during cleanup
         }
       }
     };
-  }, []);
+  }, [isCollapsed]);
 
   useEffect(() => {
     if (typeof document === 'undefined' || !document.body) return;
@@ -83,6 +121,8 @@ export function SidebarProvider({ children }: { children: ReactNode }) {
         isCollapsed,
         setIsCollapsed,
         isMobile,
+        isTablet,
+        isLargeScreen,
         isMobileOpen,
         setIsMobileOpen,
       }}

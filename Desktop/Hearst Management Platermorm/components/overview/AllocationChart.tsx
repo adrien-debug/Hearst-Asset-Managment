@@ -9,94 +9,114 @@ interface AllocationChartProps {
 }
 
 export default function AllocationChart({ data }: AllocationChartProps) {
-  const total = data.reduce((sum, item) => sum + item.value, 0);
-  const radius = 80;
-  const centerX = 120;
-  const centerY = 120;
-  let currentAngle = -90;
+  const totalValue = data.reduce((sum, item) => sum + item.value, 0);
+  const totalPercentage = data.reduce((sum, item) => sum + item.percentage, 0);
 
-  const createArc = (startAngle: number, endAngle: number) => {
-    const start = polarToCartesian(centerX, centerY, radius, endAngle);
-    const end = polarToCartesian(centerX, centerY, radius, startAngle);
-    const largeArcFlag = endAngle - startAngle <= 180 ? '0' : '1';
-    return `M ${centerX} ${centerY} L ${start.x} ${start.y} A ${radius} ${radius} 0 ${largeArcFlag} 0 ${end.x} ${end.y} Z`;
-  };
+  // Réordonner la légende pour placer "Bouquets" au centre
+  const legendOrder = ['Market Only', 'Bouquets', 'Mining-Enhanced'];
+  const legendData: AllocationData[] = legendOrder
+    .map((label) => data.find((item) => item.category === label))
+    .filter(Boolean) as AllocationData[];
 
-  const polarToCartesian = (centerX: number, centerY: number, radius: number, angleInDegrees: number) => {
-    const angleInRadians = (angleInDegrees - 90) * Math.PI / 180.0;
-    return {
-      x: centerX + (radius * Math.cos(angleInRadians)),
-      y: centerY + (radius * Math.sin(angleInRadians))
-    };
-  };
+  const radius = 140;
+  const strokeWidth = 36;
+  const circumference = 2 * Math.PI * radius;
+  const gradients = [
+    ['var(--color-primary)', 'var(--color-primary-vibrant)'],
+    ['var(--color-primary-light)', 'var(--color-primary)'],
+    ['var(--color-primary-medium)', 'var(--color-primary-vibrant)'],
+    ['var(--color-primary)', 'var(--color-primary-soft)'],
+    ['var(--color-primary-vibrant-alt)', 'var(--color-primary-vibrant-alt2)'],
+  ];
 
-  const segments = data.map((item) => {
-    const startAngle = currentAngle;
-    const endAngle = currentAngle + (item.percentage / 100) * 360;
-    currentAngle = endAngle;
-    return { ...item, startAngle, endAngle };
-  });
+  const legendGradients = gradients.map(
+    ([from, to]) => `linear-gradient(135deg, ${from}, ${to})`
+  );
+
+  let offset = 0;
 
   return (
     <div className={styles.chartContainer}>
       <div className={styles.chartHeader}>
         <h3 className={styles.chartTitle}>AUM Allocation</h3>
-        <p className={styles.chartSubtitle}>By Product Category</p>
+        <p className={styles.chartSubtitle}>Répartition par produit</p>
       </div>
+
       <div className={styles.chartContent}>
-        <div className={styles.pieChart}>
-          <svg viewBox="0 0 240 240" className={styles.chart}>
+        <div className={styles.donutWrapper}>
+          <svg viewBox="0 0 360 360" className={styles.donut}>
             <defs>
-              <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="rgba(138, 253, 129, 0.7)" />
-                <stop offset="100%" stopColor="rgba(111, 217, 106, 0.9)" />
-              </linearGradient>
-              <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="rgba(138, 253, 129, 0.9)" />
-                <stop offset="100%" stopColor="rgba(138, 253, 129, 1)" />
-              </linearGradient>
-              <linearGradient id="gradient3" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="rgba(111, 217, 106, 0.8)" />
-                <stop offset="100%" stopColor="rgba(138, 253, 129, 0.7)" />
-              </linearGradient>
+              {gradients.map(([from, to], index) => (
+                <linearGradient
+                  key={`grad-${index}`}
+                  id={`grad-${index}`}
+                  x1="0%"
+                  y1="0%"
+                  x2="100%"
+                  y2="100%"
+                >
+                  <stop offset="0%" stopColor={from} stopOpacity="1" />
+                  <stop offset="100%" stopColor={to} stopOpacity="1" />
+                </linearGradient>
+              ))}
             </defs>
-            {segments.map((segment, index) => (
-              <path
-                key={index}
-                d={createArc(segment.startAngle, segment.endAngle)}
-                fill={`url(#gradient${index + 1})`}
-                stroke="rgba(255, 255, 255, 0.8)"
-                strokeWidth="2"
-                className={styles.segment}
-              />
-            ))}
+            <circle
+              className={styles.track}
+              cx="180"
+              cy="180"
+              r={radius}
+              strokeWidth={strokeWidth}
+              fill="none"
+            />
+            {data.map((item, index) => {
+              const segmentLength = (item.percentage / 100) * circumference;
+              const dasharray = `${segmentLength} ${circumference - segmentLength}`;
+              const dashoffset = -offset;
+              offset += segmentLength;
+
+              return (
+                <circle
+                  key={item.category}
+                  className={styles.segment}
+                  cx="180"
+                  cy="180"
+                  r={radius}
+                  strokeWidth={strokeWidth}
+                  stroke={`url(#grad-${index % gradients.length})`}
+                  fill="none"
+                  strokeDasharray={dasharray}
+                  strokeDashoffset={dashoffset}
+                  strokeLinecap="round"
+                  transform="rotate(-90 180 180)"
+                  style={{ animationDelay: `${index * 90}ms` }}
+                />
+              );
+            })}
           </svg>
+
+          <div className={styles.centerLabel}>
+            <div className={styles.centerValue}>${(totalValue / 1_000_000).toFixed(0)}M</div>
+            <div className={styles.centerHint}>Total AUM</div>
+          </div>
         </div>
-        <div className={styles.legend}>
-          {data.map((item, index) => (
-            <div key={index} className={styles.legendItem}>
-              <div className={styles.legendRow}>
-                <div className={styles.legendLeft}>
-                  <div
-                    className={styles.legendDot}
-                    style={{ 
-                      background: index === 0 
-                        ? 'linear-gradient(135deg, rgba(138, 253, 129, 0.7), rgba(111, 217, 106, 0.9))'
-                        : index === 1
-                        ? 'linear-gradient(135deg, rgba(138, 253, 129, 0.9), rgba(138, 253, 129, 1))'
-                        : 'linear-gradient(135deg, rgba(111, 217, 106, 0.8), rgba(138, 253, 129, 0.7))'
-                    }}
-                  ></div>
-                  <span className={styles.legendLabel}>{item.category}</span>
-                </div>
-                <div className={styles.legendRight}>
-                  <span className={styles.legendValue}>
-                    ${(item.value / 1000000).toFixed(0)}M
-                  </span>
-                  <span className={styles.legendPercentage}>
-                    {item.percentage}%
-                  </span>
-                </div>
+
+        <div className={styles.legendGrid}>
+          {legendData.map((item, index) => (
+            <div key={item.category} className={styles.legendItem}>
+              <div className={styles.legendLeft}>
+                <span
+                  className={styles.legendDot}
+                  style={{
+                    background: legendGradients[index % legendGradients.length],
+                  }}
+                />
+                <span className={styles.legendLabel}>{item.category}</span>
+              </div>
+              <div className={styles.legendRight}>
+                <span className={styles.legendValue}>
+                  ${(item.value / 1_000_000).toFixed(1)}M
+                </span>
+                <span className={styles.legendPercentage}>{item.percentage}%</span>
               </div>
             </div>
           ))}
@@ -105,6 +125,3 @@ export default function AllocationChart({ data }: AllocationChartProps) {
     </div>
   );
 }
-
-
-

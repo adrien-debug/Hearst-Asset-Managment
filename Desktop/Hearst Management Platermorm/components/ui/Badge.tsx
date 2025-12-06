@@ -24,3 +24,5 @@ export default function Badge({ type, className = '' }: BadgeProps) {
 
 
 
+
+

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import './responsive-headers.css'
+import { SidebarProvider } from '../components/layout/SidebarContext'
 
 export const metadata: Metadata = {
   title: 'Hearth Management Platform',
@@ -14,7 +15,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <SidebarProvider>
+          {children}
+        </SidebarProvider>
+      </body>
     </html>
   )
 }

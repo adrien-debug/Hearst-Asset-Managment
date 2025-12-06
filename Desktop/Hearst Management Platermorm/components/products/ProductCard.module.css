@@ -22,25 +22,29 @@
 .title {
   font-size: 1.125rem;
   font-weight: 700;
-  margin-bottom: 8px;
-  color: var(--color-text-main);
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-text-heading);
+  letter-spacing: 0.01em;
 }
 
 .description {
   font-size: 0.875rem;
   color: var(--color-text-muted);
-  margin-bottom: 24px;
+  margin-bottom: var(--spacing-lg);
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 1.6;
 }
 
 .metrics {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  margin-bottom: 24px;
+  gap: calc(var(--spacing-sm) * 6);
+  margin-bottom: var(--spacing-lg);
 }
 
 .metricRow {
@@ -52,11 +56,15 @@
 .metricLabel {
   font-size: 0.875rem;
   color: var(--color-text-muted);
+  font-weight: 400;
+  letter-spacing: 0.01em;
 }
 
 .metricValue {
   font-size: 0.875rem;
   font-weight: 600;
+  color: var(--color-text-heading);
+  letter-spacing: 0.01em;
 }
 
 .metricValuePositive {
@@ -93,6 +101,8 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
+
+
 
 
 

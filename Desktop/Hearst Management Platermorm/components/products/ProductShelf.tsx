@@ -6,6 +6,7 @@ import { mockProducts } from '@/lib/mock-data';
 import Badge from '@/components/ui/Badge';
 import MiningIndicator from '@/components/ui/MiningIndicator';
 import Link from 'next/link';
+import { formatPercentage } from '@/lib/format';
 import styles from './ProductShelfHorizontal.module.css';
 
 function formatCurrency(amount: number): string {
@@ -68,9 +69,9 @@ export default function ProductShelf() {
               <th className={styles.tableHeaderCell}>Product</th>
               <th className={styles.tableHeaderCell}>Type</th>
               <th className={styles.tableHeaderCell}>Description</th>
-              <th className={styles.tableHeaderCell} style={{ textAlign: 'right' }}>AUM</th>
-              <th className={styles.tableHeaderCell} style={{ textAlign: 'right' }}>YTD</th>
-              <th className={styles.tableHeaderCell} style={{ textAlign: 'right' }}>Mining %</th>
+              <th className={styles.tableHeaderCell}>AUM</th>
+              <th className={styles.tableHeaderCell}>YTD</th>
+              <th className={styles.tableHeaderCell}>Mining %</th>
               <th className={styles.tableHeaderCell} style={{ textAlign: 'center' }}>Action</th>
             </tr>
           </thead>
@@ -92,20 +93,20 @@ export default function ProductShelf() {
                   {formatCurrency(product.aum)}
                 </td>
                 <td className={`${styles.tableCell} ${styles.tableCellMetric} ${product.ytdPerformance >= 0 ? styles.tableCellMetricPositive : styles.tableCellMetricNegative}`}>
-                  {product.ytdPerformance >= 0 ? '+' : ''}{product.ytdPerformance.toFixed(1)}%
+                  {formatPercentage(product.ytdPerformance, 1)}
                 </td>
                 <td className={styles.tableCell}>
                   {product.miningExposurePercent > 0 ? (
-                    <div>
-                      <div style={{ textAlign: 'right', marginBottom: '4px', fontSize: '0.875rem', fontWeight: 600 }}>
+                    <div style={{ textAlign: 'right' }}>
+                      <div style={{ marginBottom: '4px', fontSize: '0.875rem', fontWeight: 600 }}>
                         {product.miningExposurePercent}%
                       </div>
-                      <div className={styles.miningIndicatorContainer}>
+                      <div className={styles.miningIndicatorContainer} style={{ margin: '0 auto' }}>
                         <MiningIndicator percent={product.miningExposurePercent} />
                       </div>
                     </div>
                   ) : (
-                    <span style={{ color: 'var(--color-text-muted)', fontSize: '0.875rem' }}>—</span>
+                    <span style={{ color: 'var(--color-text-muted)', fontSize: '0.875rem', display: 'block', textAlign: 'right' }}>—</span>
                   )}
                 </td>
                 <td className={styles.tableCell} style={{ textAlign: 'center' }}>

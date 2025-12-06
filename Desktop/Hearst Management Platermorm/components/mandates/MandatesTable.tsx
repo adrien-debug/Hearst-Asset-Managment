@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Mandate } from '@/lib/mock-mandates';
 import { mockMandates } from '@/lib/mock-mandates';
 import Link from 'next/link';
-import { formatCurrency, formatDate } from '@/lib/format';
+import { formatCurrency, formatDate, formatPercentage } from '@/lib/format';
 import styles from './MandatesTable.module.css';
 
 const typeLabels = {
@@ -128,7 +128,7 @@ export default function MandatesTable() {
         <div className={styles.summaryCard}>
           <div className={styles.summaryLabel}>Average YTD</div>
           <div className={styles.summaryValue} style={{ color: 'var(--color-success)' }}>
-            +{avgYTD.toFixed(1)}%
+            {formatPercentage(avgYTD, 1)}
           </div>
         </div>
         <div className={styles.summaryCard}>
@@ -155,8 +155,8 @@ export default function MandatesTable() {
               <th className={styles.tableHeaderCell}>Client</th>
               <th className={styles.tableHeaderCell}>Type</th>
               <th className={styles.tableHeaderCell}>Status</th>
-              <th className={styles.tableHeaderCell} style={{ textAlign: 'right' }}>AUM</th>
-              <th className={styles.tableHeaderCell} style={{ textAlign: 'right' }}>YTD Performance</th>
+              <th className={styles.tableHeaderCell}>AUM</th>
+              <th className={styles.tableHeaderCell}>YTD Performance</th>
               <th className={styles.tableHeaderCell}>Risk Profile</th>
               <th className={styles.tableHeaderCell}>Jurisdiction</th>
               <th className={styles.tableHeaderCell}>Manager</th>
@@ -198,7 +198,7 @@ export default function MandatesTable() {
                 </td>
                 <td className={`${styles.tableCell} ${styles.tableCellMetric}`}>
                   <span style={{ color: mandate.ytdPerformance >= 0 ? 'var(--color-success)' : 'var(--color-danger)' }}>
-                    {mandate.ytdPerformance > 0 ? '+' : ''}{mandate.ytdPerformance.toFixed(1)}%
+                    {formatPercentage(mandate.ytdPerformance, 1)}
                   </span>
                 </td>
                 <td className={styles.tableCell}>

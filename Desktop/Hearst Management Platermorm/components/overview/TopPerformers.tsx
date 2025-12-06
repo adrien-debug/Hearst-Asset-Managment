@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import Card from '@/components/ui/Card';
 import Badge from '@/components/ui/Badge';
 import { formatCurrency } from '@/lib/format';
 import styles from './TopPerformers.module.css';
@@ -19,7 +18,7 @@ interface TopPerformersProps {
 
 export default function TopPerformers({ data }: TopPerformersProps) {
   return (
-    <Card className={styles.container}>
+    <div className={styles.container}>
       <div className={styles.header}>
         <h3 className={styles.title}>Top Performers</h3>
         <p className={styles.subtitle}>YTD Performance</p>
@@ -27,7 +26,7 @@ export default function TopPerformers({ data }: TopPerformersProps) {
       <div className={styles.table}>
         <div className={styles.tableHeader}>
           <div className={styles.headerCell}>Product</div>
-          <div className={styles.headerCell}>Type</div>
+          <div className={styles.headerCell}>Data</div>
           <div className={`${styles.headerCell} ${styles.headerCellRight}`}>AUM</div>
           <div className={`${styles.headerCell} ${styles.headerCellRight}`}>YTD</div>
         </div>
@@ -48,7 +47,7 @@ export default function TopPerformers({ data }: TopPerformersProps) {
           </div>
         ))}
       </div>
-    </Card>
+    </div>
   );
 }
 

@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useSidebar } from './SidebarContext';
@@ -20,6 +20,11 @@ const menuItems = [
 export default function Sidebar() {
   const pathname = usePathname();
   const { isCollapsed, setIsCollapsed, isMobile, isMobileOpen, setIsMobileOpen } = useSidebar();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const sidebarClasses = [
     styles.sidebar,
@@ -30,8 +35,8 @@ export default function Sidebar() {
 
   return (
     <>
-      {/* Bouton toggle fixe pour mobile */}
-      {isMobile && (
+      {/* Bouton toggle fixe pour mobile - rendu seulement après montage pour éviter l'erreur d'hydratation */}
+      {mounted && isMobile && (
         <button
           onClick={() => setIsMobileOpen(!isMobileOpen)}
           className={styles.mobileToggleButton}
@@ -40,25 +45,17 @@ export default function Sidebar() {
           {isMobileOpen ? '✕' : '☰'}
         </button>
       )}
-      {isMobile && isMobileOpen && (
+      {mounted && isMobile && (
         <div
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
-            zIndex: 49,
-            pointerEvents: 'auto',
-          }}
+          className={`${styles.backdrop} ${isMobileOpen ? styles.backdropVisible : ''}`}
           onClick={(e) => {
             // Ne pas fermer si on clique sur le bouton toggle
-            if ((e.target as HTMLElement).closest('.mobileToggleButton')) {
+            if ((e.target as HTMLElement).closest(`.${styles.mobileToggleButton}`)) {
               return;
             }
             setIsMobileOpen(false);
           }}
+          aria-hidden={!isMobileOpen}
         />
       )}
       <aside className={sidebarClasses}>

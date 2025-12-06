@@ -2,6 +2,7 @@ import React from 'react';
 import { Product } from '@/types/product';
 import Badge from '@/components/ui/Badge';
 import Card from '@/components/ui/Card';
+import { formatPercentage, formatMonthYear } from '@/lib/format';
 import styles from './ProductHeader.module.css';
 
 interface ProductHeaderProps {
@@ -36,12 +37,12 @@ export default function ProductHeader({ product }: ProductHeaderProps) {
         </Card>
         <Card className={styles.kpiCard}>
           <div className={styles.kpiLabel}>Inception Date</div>
-          <div className={styles.kpiValue}>{new Date(product.inceptionDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}</div>
+          <div className={styles.kpiValue}>{formatMonthYear(product.inceptionDate)}</div>
         </Card>
         <Card className={styles.kpiCard}>
           <div className={styles.kpiLabel}>YTD Performance</div>
           <div className={styles.kpiValue} style={{ color: product.ytdPerformance >= 0 ? 'var(--color-success)' : 'var(--color-danger)' }}>
-            {product.ytdPerformance >= 0 ? '+' : ''}{product.ytdPerformance.toFixed(1)}%
+            {formatPercentage(product.ytdPerformance, 1)}
           </div>
         </Card>
         <Card className={styles.kpiCard}>

@@ -62,3 +62,5 @@ export default function AllocationTable({ allocations }: AllocationTableProps) {
 
 
 
+
+

@@ -6,6 +6,7 @@ import { getPortfoliosByMandateId } from '@/lib/mock-mandates';
 import { mockProducts } from '@/lib/mock-data';
 import Card from '@/components/ui/Card';
 import { Table, TableHeader, TableRow, TableCell } from '@/components/ui/Table';
+import { formatPercentage } from '@/lib/format';
 import Link from 'next/link';
 import styles from './MandateDetail.module.css';
 
@@ -63,7 +64,7 @@ export default function MandateDetail({ mandate }: MandateDetailProps) {
         <Card className={styles.metricCard}>
           <div className={styles.metricLabel}>YTD Performance</div>
           <div className={styles.metricValue} style={{ color: mandate.ytdPerformance >= 0 ? 'var(--color-success)' : 'var(--color-danger)' }}>
-            {mandate.ytdPerformance >= 0 ? '+' : ''}{mandate.ytdPerformance.toFixed(1)}%
+            {formatPercentage(mandate.ytdPerformance, 1)}
           </div>
         </Card>
         <Card className={styles.metricCard}>
@@ -130,7 +131,7 @@ export default function MandateDetail({ mandate }: MandateDetailProps) {
             <div className={styles.summaryItem}>
               <span className={styles.summaryLabel}>Average YTD</span>
               <span className={styles.summaryValue} style={{ color: 'var(--color-success)' }}>
-                +{((portfolios.reduce((sum, p) => sum + p.ytdPerformance, 0) / portfolios.length) || 0).toFixed(1)}%
+                {formatPercentage((portfolios.reduce((sum, p) => sum + p.ytdPerformance, 0) / portfolios.length) || 0, 1)}
               </span>
             </div>
           </div>
@@ -168,7 +169,7 @@ export default function MandateDetail({ mandate }: MandateDetailProps) {
                     fontWeight: 600,
                     color: product!.ytdPerformance >= 0 ? 'var(--color-success)' : 'var(--color-danger)'
                   }}>
-                    {product!.ytdPerformance >= 0 ? '+' : ''}{product!.ytdPerformance.toFixed(1)}%
+                    {formatPercentage(product!.ytdPerformance, 1)}
                   </TableCell>
                   <TableCell style={{ textAlign: 'center' }}>
                     <Link href={`/products/${product!.id}`} style={{ textDecoration: 'none' }}>
@@ -201,7 +202,7 @@ export default function MandateDetail({ mandate }: MandateDetailProps) {
                     <div>
                       <span className={styles.portfolioMetricLabel}>YTD</span>
                       <span className={styles.portfolioMetricValue} style={{ color: 'var(--color-success)' }}>
-                        +{portfolio.ytdPerformance.toFixed(1)}%
+                        {formatPercentage(portfolio.ytdPerformance, 1)}
                       </span>
                     </div>
                   </div>

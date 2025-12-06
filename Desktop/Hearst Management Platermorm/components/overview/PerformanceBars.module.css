@@ -1,0 +1,136 @@
+.card {
+  background: transparent;
+  padding: 32px;
+  border-bottom: 2px solid var(--color-border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+@media (max-width: 1024px) {
+  .card {
+    padding: 28px;
+  }
+}
+
+@media (max-width: 768px) {
+  .card {
+    padding: 24px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 20px 16px;
+  }
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.title {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: var(--color-text-heading);
+  letter-spacing: 0.01em;
+}
+
+.subtitle {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  font-weight: 400;
+  letter-spacing: 0.005em;
+}
+
+.chartArea {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 12px;
+  align-items: end;
+}
+
+.yAxis {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 320px;
+  padding: 6px 0;
+}
+
+.yTick {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.barsWrapper {
+  position: relative;
+  height: 320px;
+}
+
+.gridLine {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--color-border-subtle);
+  opacity: 0.6;
+}
+
+.bars {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(28px, 1fr));
+  gap: 10px;
+  align-items: end;
+}
+
+.bar {
+  background: linear-gradient(135deg, rgba(138, 253, 129, 0.92), rgba(104, 235, 104, 0.78));
+  border-radius: 8px 8px 4px 4px;
+  border: none;
+  box-shadow: none;
+  transition: transform 0.18s ease, opacity 0.18s ease;
+  min-height: 4px;
+}
+
+.bar:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+.xAxis {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(28px, 1fr));
+  gap: 10px;
+}
+
+.xLabel {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+  text-align: center;
+  font-weight: 500;
+}
+
+.legend {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}
+
+.legendDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(138, 253, 129, 0.92), rgba(104, 235, 104, 0.78));
+  border: none;
+}
+

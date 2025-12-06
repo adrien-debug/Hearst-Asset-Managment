@@ -1,53 +1,38 @@
 .container {
-  background: linear-gradient(135deg, var(--color-surface) 0%, rgba(255, 255, 255, 0.98) 100%);
-  border-radius: 16px;
-  border: 1px solid rgba(138, 253, 129, 0.15);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.05);
-  padding: 24px;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  transform: scale(1);
+  background: transparent;
+  border-radius: 0;
+  border: none;
+  border-bottom: 2px solid var(--color-border-subtle);
+  box-shadow: none;
+  padding: 24px 0;
+  transition: var(--transition-card);
+  transform: none;
   position: relative;
-  overflow: hidden;
-  height: 100%;
+  overflow: visible;
+  height: auto;
 }
 
-.container::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, rgba(138, 253, 129, 0.8), rgba(138, 253, 129, 0.4));
-  opacity: 0.6;
-}
 
 @media (max-width: 768px) {
   .container {
-    padding: 20px;
-    border-radius: 14px;
+    padding: 20px 0;
+    border-radius: 0;
   }
   
-  .container::before {
-    height: 2px;
-  }
 }
 
 @media (max-width: 480px) {
   .container {
-    padding: 16px;
-    border-radius: 12px;
+    padding: 16px 0;
+    border-radius: 0;
   }
   
-  .container::before {
-    height: 2px;
-  }
 }
 
 .container:hover {
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08);
-  transform: translateY(-2px);
-  border-color: rgba(138, 253, 129, 0.25);
+  box-shadow: none;
+  transform: none;
+  border-bottom-color: var(--color-primary);
 }
 
 .header {
@@ -55,10 +40,10 @@
 }
 
 .title {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--color-text-main);
-  letter-spacing: -0.03em;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-text-heading);
+  letter-spacing: 0.01em;
   margin-bottom: 4px;
 }
 
@@ -89,7 +74,7 @@
 .region {
   font-size: 0.9375rem;
   font-weight: 600;
-  color: var(--color-text-main);
+  color: var(--color-text-heading);
 }
 
 .values {
@@ -101,7 +86,7 @@
 .aum {
   font-size: 0.9375rem;
   font-weight: 600;
-  color: var(--color-text-main);
+  color: var(--color-text-heading);
 }
 
 .percentage {
