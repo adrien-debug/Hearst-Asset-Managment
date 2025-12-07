@@ -57,13 +57,12 @@ export default function ProductShelf() {
         <table className={styles.table}>
           <thead className={styles.tableHeader}>
             <tr className={styles.tableHeaderRow}>
-              <th className={styles.tableHeaderCell}>Product</th>
+              <th className={styles.tableHeaderCell} style={{ textAlign: 'left' }}>Product</th>
               <th className={styles.tableHeaderCell}>Type</th>
-              <th className={styles.tableHeaderCell}>Description</th>
-              <th className={styles.tableHeaderCell} style={{ textAlign: 'right' }}>AUM</th>
-              <th className={styles.tableHeaderCell} style={{ textAlign: 'right' }}>YTD</th>
-              <th className={styles.tableHeaderCell} style={{ textAlign: 'right' }}>Mining %</th>
-              <th className={styles.tableHeaderCell} style={{ textAlign: 'center' }}>Action</th>
+              <th className={styles.tableHeaderCell}>AUM</th>
+              <th className={styles.tableHeaderCell}>YTD</th>
+              <th className={styles.tableHeaderCell}>Mining %</th>
+              <th className={styles.tableHeaderCell}>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -73,23 +72,20 @@ export default function ProductShelf() {
                   {product.name}
                 </td>
                 <td className={styles.tableCell}>
-                  <div className={styles.badgeContainer}>
+                  <div className={styles.badgeContainer} style={{ textAlign: 'center' }}>
                     <Badge type={product.type} />
                   </div>
-                </td>
-                <td className={`${styles.tableCell} ${styles.tableCellDescription}`}>
-                  {product.description}
                 </td>
                 <td className={`${styles.tableCell} ${styles.tableCellMetric}`}>
                   {formatCurrency(product.aum)}
                 </td>
-                <td className={`${styles.tableCell} ${styles.tableCellMetric} ${product.ytdPerformance >= 0 ? styles.tableCellMetricPositive : styles.tableCellMetricNegative}`}>
+                <td className={`${styles.tableCell} ${styles.tableCellMetric}`}>
                   {product.ytdPerformance >= 0 ? '+' : ''}{product.ytdPerformance.toFixed(1)}%
                 </td>
                 <td className={styles.tableCell}>
                   {product.miningExposurePercent > 0 ? (
-                    <div>
-                      <div style={{ textAlign: 'right', marginBottom: '4px', fontSize: '0.875rem', fontWeight: 600 }}>
+                    <div style={{ textAlign: 'center' }}>
+                      <div style={{ marginBottom: '4px', fontSize: '0.875rem', fontWeight: 600 }}>
                         {product.miningExposurePercent}%
                       </div>
                       <div className={styles.miningIndicatorContainer}>
@@ -100,7 +96,7 @@ export default function ProductShelf() {
                     <span style={{ color: 'var(--color-text-muted)', fontSize: '0.875rem' }}>—</span>
                   )}
                 </td>
-                <td className={styles.tableCell} style={{ textAlign: 'center' }}>
+                <td className={styles.tableCell}>
                   <Link href={`/products/${product.id}`} style={{ textDecoration: 'none' }}>
                     <button className={styles.actionButton}>
                       View

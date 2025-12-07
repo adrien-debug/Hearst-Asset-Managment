@@ -1,5 +1,6 @@
 import DashboardLayout from '@/components/layout/DashboardLayout';
-import Card from '@/components/ui/Card';
+import PageHeader from '@/components/layout/PageHeader';
+import MetricsBanner from '@/components/layout/MetricsBanner';
 import { mockProducts } from '@/lib/mock-data';
 import { formatCurrency } from '@/lib/format';
 import {
@@ -18,41 +19,37 @@ export default function HomePage() {
   const miningProducts = mockProducts.filter(p => p.type === 'mining').length;
   const bouquetProducts = mockProducts.filter(p => p.type === 'bouquet').length;
 
+  const metrics = [
+    {
+      label: 'Total AUM',
+      value: formatCurrency(totalAUM),
+      change: '+12.4% vs last quarter'
+    },
+    {
+      label: 'Average YTD',
+      value: `+${avgYTD.toFixed(1)}%`,
+      change: '+2.1% vs benchmark',
+      isSuccess: true
+    },
+    {
+      label: 'Total Products',
+      value: mockProducts.length,
+      change: `${marketProducts + miningProducts + bouquetProducts} active`
+    },
+    {
+      label: 'Active Strategies',
+      value: mockProducts.length,
+      change: 'All performing'
+    }
+  ];
+
   return (
     <DashboardLayout>
       <div className={styles.container}>
-        <div className={styles.header}>
-          <h1 className={styles.title}>Overview</h1>
-          <p className={styles.subtitle}>
-            Comprehensive view of platform performance, allocations, and key metrics
-          </p>
-        </div>
+        <PageHeader title="Overview" />
 
         {/* Key Metrics - Horizontal */}
-        <div className={styles.metricsGrid}>
-          <Card className={styles.metricCard}>
-            <div className={styles.metricLabel}>Total AUM</div>
-            <div className={styles.metricValue}>{formatCurrency(totalAUM)}</div>
-            <div className={styles.metricChange}>+12.4% vs last quarter</div>
-          </Card>
-          <Card className={styles.metricCard}>
-            <div className={styles.metricLabel}>Average YTD</div>
-            <div className={`${styles.metricValue} ${styles.metricValueSuccess}`}>
-              +{avgYTD.toFixed(1)}%
-            </div>
-            <div className={styles.metricChange}>+2.1% vs benchmark</div>
-          </Card>
-          <Card className={styles.metricCard}>
-            <div className={styles.metricLabel}>Total Products</div>
-            <div className={styles.metricValue}>{mockProducts.length}</div>
-            <div className={styles.metricChange}>{marketProducts + miningProducts + bouquetProducts} active</div>
-          </Card>
-          <Card className={styles.metricCard}>
-            <div className={styles.metricLabel}>Active Strategies</div>
-            <div className={styles.metricValue}>{mockProducts.length}</div>
-            <div className={styles.metricChange}>All performing</div>
-          </Card>
-        </div>
+        <MetricsBanner metrics={metrics} />
 
         {/* Hero Performance Curve */}
         <HeroPerformanceCurve data={mockPerformanceData} totalAUM={totalAUM} avgYTD={avgYTD} />

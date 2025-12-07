@@ -58,15 +58,29 @@ export default function HeroPerformanceCurve({ data, totalAUM, avgYTD }: HeroPer
   } | null>(null);
 
   useEffect(() => {
+    if (!containerRef.current) return;
+    
     const update = () => {
       if (containerRef.current) {
         setSvgWidth(Math.max(containerRef.current.clientWidth, 640));
       }
     };
+    
     update();
     const ro = new ResizeObserver(update);
-    if (containerRef.current) ro.observe(containerRef.current);
-    return () => ro.disconnect();
+    const currentContainer = containerRef.current;
+    
+    if (currentContainer) {
+      ro.observe(currentContainer);
+    }
+    
+    return () => {
+      try {
+        ro.disconnect();
+      } catch (e) {
+        // Ignore errors during cleanup
+      }
+    };
   }, []);
 
   const series = useMemo(() => {
@@ -344,7 +358,7 @@ export default function HeroPerformanceCurve({ data, totalAUM, avgYTD }: HeroPer
               y1={padding.top}
               x2={tooltip.x}
               y2={padding.top + innerHeight}
-              stroke="rgba(255, 255, 255, 0.15)"
+              stroke="rgba(0, 0, 0, 0.15)"
               strokeWidth="1"
               strokeDasharray="3 3"
               className={styles.crosshair}
@@ -370,7 +384,7 @@ export default function HeroPerformanceCurve({ data, totalAUM, avgYTD }: HeroPer
                       y1={padding.top}
                       x2={p.x}
                       y2={padding.top + innerHeight}
-                      stroke="rgba(255, 255, 255, 0.03)"
+                      stroke="rgba(0, 0, 0, 0.03)"
                       strokeWidth="1"
                       strokeDasharray="2 2"
                     />
@@ -424,7 +438,7 @@ export default function HeroPerformanceCurve({ data, totalAUM, avgYTD }: HeroPer
                   cy={portfolioPoint.y}
                   r="4"
                   fill="#8AFD81"
-                  stroke="#0a0a0a"
+                  stroke="#ffffff"
                   strokeWidth="2"
                 />
                 <circle
@@ -432,7 +446,7 @@ export default function HeroPerformanceCurve({ data, totalAUM, avgYTD }: HeroPer
                   cy={benchmarkPoint.y}
                   r="3.5"
                   fill="#94a3b8"
-                  stroke="#0a0a0a"
+                  stroke="#ffffff"
                   strokeWidth="2"
                 />
               </g>

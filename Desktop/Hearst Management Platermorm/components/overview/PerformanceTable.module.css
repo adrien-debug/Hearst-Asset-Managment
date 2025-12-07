@@ -39,12 +39,13 @@
 
 .performanceTable {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   font-size: 0.9375rem;
   table-layout: fixed;
   text-align: left;
-  border-spacing: 0;
   background-color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
 .performanceTable thead {
@@ -59,19 +60,20 @@
 
 .tableHeader {
   text-align: center !important;
-  padding: var(--spacing-element) var(--spacing-block);
+  padding: 20px 24px;
   font-weight: 600;
-  font-size: var(--font-size-body);
-  color: rgba(0, 0, 0, 0.75);
+  font-size: 0.8125rem;
+  color: rgba(0, 0, 0, 0.85);
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
-  border-right: 1px solid rgba(0, 0, 0, 0.06);
-  background-color: #ffffff;
+  letter-spacing: 0.12em;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  border-right: 0.5px solid rgba(0, 0, 0, 0.06);
+  background-color: #fafbfc;
   overflow: hidden;
   text-overflow: ellipsis;
   box-sizing: border-box;
   position: relative;
+  font-feature-settings: "kern" 1, "liga" 1;
 }
 
 .tableHeader:last-child {
@@ -83,21 +85,23 @@
 }
 
 .tableRow {
-  transition: background-color 0.2s ease, transform 0.1s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   background-color: #ffffff;
+  position: relative;
 }
 
 .tableRow:nth-child(even) {
-  background-color: #f8f9fa;
+  background-color: #fafbfc;
 }
 
 .tableRow:hover {
-  background-color: rgba(138, 253, 129, 0.08);
-  transform: translateX(2px);
+  background-color: rgba(138, 253, 129, 0.04);
+  box-shadow: inset 0 0 0 1px rgba(138, 253, 129, 0.1);
 }
 
 .tableRow:hover .tableCell {
-  border-right-color: rgba(138, 253, 129, 0.15);
+  border-right-color: rgba(138, 253, 129, 0.12);
+  color: #000000;
 }
 
 .tableRow:last-child .tableCell {
@@ -105,19 +109,21 @@
 }
 
 .tableCell {
-  padding: var(--spacing-block) var(--spacing-block);
+  padding: 20px 24px;
   color: #000000;
-  font-size: 1rem;
+  font-size: 0.9375rem;
   font-weight: 400;
   vertical-align: middle;
   overflow: hidden;
   text-overflow: ellipsis;
   word-wrap: break-word;
-  border-bottom: 2px solid rgba(0, 0, 0, 0.08);
-  border-right: 1px solid rgba(0, 0, 0, 0.05);
-  background-color: #ffffff;
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.08);
+  border-right: 0.5px solid rgba(0, 0, 0, 0.04);
+  background-color: transparent;
   box-sizing: border-box;
   position: relative;
+  line-height: 1.6;
+  transition: all 0.2s ease;
 }
 
 .tableCell:last-child {
@@ -127,26 +133,33 @@
 .tableCellValue {
   font-weight: 600;
   color: #000000;
-  letter-spacing: 0.01em;
-  font-feature-settings: "tnum";
+  letter-spacing: 0.02em;
+  font-feature-settings: "tnum", "kern" 1;
   font-variant-numeric: tabular-nums;
-  font-size: 1rem;
+  font-size: 0.9375rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
 }
 
 .tableCellDifference {
   font-weight: 600;
   color: #000000;
-  font-feature-settings: "tnum";
+  letter-spacing: 0.02em;
+  font-feature-settings: "tnum", "kern" 1;
   font-variant-numeric: tabular-nums;
-  font-size: 1rem;
+  font-size: 0.9375rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
 }
 
 .positive {
   color: #8AFD81;
+  font-weight: 600;
+  letter-spacing: 0.03em;
 }
 
 .negative {
   color: #f87171;
+  font-weight: 600;
+  letter-spacing: 0.03em;
 }
 
 @media (max-width: 768px) {

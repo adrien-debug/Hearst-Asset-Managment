@@ -146,8 +146,8 @@ export default function ExecutionsTable() {
               <th className={styles.tableHeaderCell}>Product</th>
               <th className={styles.tableHeaderCell}>Type</th>
               <th className={styles.tableHeaderCell}>Status</th>
-              <th className={styles.tableHeaderCell} style={{ textAlign: 'right' }}>Value</th>
-              <th className={styles.tableHeaderCell} style={{ textAlign: 'center' }}>Action</th>
+              <th className={styles.tableHeaderCell}>Value</th>
+              <th className={styles.tableHeaderCell}>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -182,7 +182,7 @@ export default function ExecutionsTable() {
                 <td className={`${styles.tableCell} ${styles.tableCellMetric}`}>
                   {formatCurrency(execution.value)}
                 </td>
-                <td className={styles.tableCell} style={{ textAlign: 'center' }}>
+                <td className={styles.tableCell}>
                   <button 
                     className={styles.actionButton}
                     onClick={(e) => {
